@@ -68,7 +68,7 @@ describe('CatBreedsService', () => {
         }
       });
 
-      const req = httpMock.expectOne('http://localhost:3000/api/breeds');
+      const req = httpMock.expectOne('https://api.thecatapi.com/v1/breeds');
       req.flush(errorMessage, { status: 500, statusText: 'Server Error' });
     });
   });
@@ -91,7 +91,7 @@ describe('CatBreedsService', () => {
         expect(breed.name).toBe('Persian');
       });
 
-      const req = httpMock.expectOne('http://localhost:3000/api/breeds/1');
+      const req = httpMock.expectOne('https://api.thecatapi.com/v1/breeds/1');
       expect(req.request.method).toBe('GET');
       
       // Mock response should match the expected {data: object} structure
@@ -115,7 +115,7 @@ describe('CatBreedsService', () => {
         expect(images[1].id).toBe('2');
       });
 
-      const req = httpMock.expectOne('http://localhost:3000/api/images/imagesbybreedid?breed_id=1&limit=2');
+      const req = httpMock.expectOne('https://api.thecatapi.com/v1/images/search?breed_ids=1&limit=2');
       expect(req.request.method).toBe('GET');
       
       // Mock response should match the expected {data: array} structure
@@ -135,7 +135,7 @@ describe('CatBreedsService', () => {
         expect(images[0].id).toBe('1');
       });
 
-      const req = httpMock.expectOne('http://localhost:3000/api/images/imagesbybreedid?breed_id=1&limit=10');
+      const req = httpMock.expectOne('https://api.thecatapi.com/v1/images/search?breed_ids=1&limit=10');
       expect(req.request.method).toBe('GET');
       
       // Mock response should match the expected {data: array} structure
@@ -165,7 +165,7 @@ describe('CatBreedsService', () => {
         expect(breeds[0].name).toBe('Persian');
       });
 
-      const req = httpMock.expectOne('http://localhost:3000/api/breeds/search?q=persian');
+      const req = httpMock.expectOne('https://api.thecatapi.com/v1/breeds/search?q=persian');
       expect(req.request.method).toBe('GET');
       
       // Mock response should match the expected {data: array} structure

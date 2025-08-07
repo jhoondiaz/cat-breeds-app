@@ -250,13 +250,7 @@ describe('CatBreedsComponent', () => {
 
   describe('search functionality', () => {
     it('should debounce search input', fakeAsync(() => {
-      // Configurar mock data correctamente
       component.allBreeds = mockBreeds;
-      component.displayedBreeds = mockBreeds;
-      
-      // Inicializar el componente correctamente
-      component.ngOnInit();
-      fixture.detectChanges();
       
       // Trigger multiple search inputs quickly
       component.searchQuery = 'p';
@@ -270,15 +264,9 @@ describe('CatBreedsComponent', () => {
       
       // Fast-forward time to complete debounce
       tick(350);
-      fixture.detectChanges();
       
-      // Verificar que el filtrado funcionó
-      expect(component.displayedBreeds.length).toBeGreaterThanOrEqual(0);
-      
-      // Si hay resultados, verificar que contengan la búsqueda
-      if (component.displayedBreeds.length > 0) {
-        expect(component.displayedBreeds[0].name.toLowerCase()).toContain('per');
-      }
+      expect(component.displayedBreeds.length).toBe(1);
+      expect(component.displayedBreeds[0].name).toBe('Persian');
     }));
   });
 });

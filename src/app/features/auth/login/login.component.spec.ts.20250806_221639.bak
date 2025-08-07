@@ -55,15 +55,15 @@ describe('LoginComponent', () => {
         MatIconModule,
         MatProgressSpinnerModule,
         BrowserAnimationsModule,
-        HttpClientTestingModule
-      ],
-      providers: [
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: Router, useValue: routerSpy },
-        provideRouter([
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([
           { path: 'home', component: DummyComponent },
           { path: 'cat-breeds', component: DummyComponent }
         ])
+      ],
+      providers: [
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: Router, useValue: routerSpy }
       ]
     }).compileComponents();
 

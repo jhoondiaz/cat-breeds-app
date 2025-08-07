@@ -185,9 +185,9 @@ describe('AuthService', () => {
       
       const currentUser = testService.getCurrentUser();
       expect(currentUser).toBeTruthy();
-      expect(currentUser!.id).toBe('1');
-      expect(currentUser!.email).toBe('test@example.com');
-      expect(currentUser!.userName).toBe('testuser');
+      expect(currentUser.id).toBe('1');
+      expect(currentUser.email).toBe('test@example.com');
+      expect(currentUser.userName).toBe('testuser');
     });
 
     it('should return null when no user is stored', () => {
@@ -209,50 +209,36 @@ describe('AuthService', () => {
 
   describe('loadStoredAuth', () => {
     it('should load stored auth data on service initialization', () => {
-      // Crear mock user simple sin fechas Date
-      const mockUserString = {
-        id: '1',
-        email: 'test@example.com',
-        userName: 'testuser',
-        firstName: 'Test',
-        lastName: 'User',
-        createdAt: '2025-08-07T03:14:04.737Z',
-        updatedAt: '2025-08-07T03:14:04.737Z'
-      };
+      // Usar TestBed para crear el servicio correctamente
+      const testService = TestBed.inject(AuthService);
       
       // Simular datos en localStorage con las claves correctas
       spyOn(localStorage, 'getItem').and.callFake((key: string) => {
         if (key === 'authToken') return 'test-token';
-        if (key === 'currentUser') return JSON.stringify(mockUserString);
+        if (key === 'currentUser') return JSON.stringify(mockUser);
+        return null;
+      });
+
+      // Llamar al método privado loadStoredAuth indirectamente
+      (testService as any).loadStoredAuth();
+      
+      expect(testService.getCurrentUser()).toEqual(mockUser);
+      expect(testService.getToken()).toBe('test-token');
+    });
+
+    it('should handle corrupted user data', () => {
+      const testService = TestBed.inject(AuthService);
+      
+      spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+        if (key === 'authToken') return 'test-token';
+        if (key === 'currentUser') return 'invalid-json';
         return null;
       });
       
-      // Crear servicio después de configurar el mock
-      const testService = TestBed.inject(AuthService);
-      
-      // Llamar al método privado loadStoredAuth
+      spyOn(localStorage, 'removeItem');
+      // Llamar al método privado loadStoredAuth indirectamente
       (testService as any).loadStoredAuth();
       
-      // Verificar que los datos se cargaron correctamente
-      const currentUser = testService.getCurrentUser();
-      const token = testService.getToken();
-      
-      expect(currentUser).toBeTruthy();
-      expect(currentUser!.id).toBe('1');
-      expect(token).toBe('test-token');
-    });
-
-    it('should handle missing stored auth data', () => {
-      // Simular localStorage vacío
-      spyOn(localStorage, 'getItem').and.returnValue(null);
-      
-      // Crear servicio después de configurar el mock
-      const testService = TestBed.inject(AuthService);
-      
-      // Llamar al método privado loadStoredAuth
-      (testService as any).loadStoredAuth();
-      
-      // Verificar que no hay datos
       expect(testService.getCurrentUser()).toBeNull();
       expect(testService.getToken()).toBeNull();
     });

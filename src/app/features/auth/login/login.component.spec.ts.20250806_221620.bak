@@ -15,7 +15,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component } from '@angular/core';
-import { provideRouter } from '@angular/router';
 
 // Dummy component para las rutas
 @Component({ template: '' })
@@ -43,7 +42,6 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     const authServiceSpy = jasmine.createSpyObj('AuthService', ['login', 'isAuthenticated']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    
     await TestBed.configureTestingModule({
       imports: [
         LoginComponent, 
@@ -55,15 +53,15 @@ describe('LoginComponent', () => {
         MatIconModule,
         MatProgressSpinnerModule,
         BrowserAnimationsModule,
-        HttpClientTestingModule
-      ],
-      providers: [
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: Router, useValue: routerSpy },
-        provideRouter([
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([
           { path: 'home', component: DummyComponent },
           { path: 'cat-breeds', component: DummyComponent }
         ])
+      ],
+      providers: [
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: Router, useValue: routerSpy }
       ]
     }).compileComponents();
 
