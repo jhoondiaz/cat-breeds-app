@@ -1,0 +1,205 @@
+.app-layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenav-container {
+  flex: 1;
+  display: flex;
+}
+
+.sidenav {
+  width: 280px;
+  background: #fafafa;
+  border-right: 1px solid #e0e0e0;
+  
+  .sidenav-header {
+    background: linear-gradient(135deg, #3f51b5, #2196f3);
+    color: white;
+    
+    span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+  }
+  
+  .mobile-user-section {
+    padding: 16px;
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      color: #666;
+      font-size: 14px;
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.main-toolbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  
+  .toolbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+    font-size: 1.2rem;
+    
+    &:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+  
+  .toolbar-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .desktop-nav {
+    display: flex;
+    gap: 8px;
+    margin-right: 16px;
+    
+    button {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      
+      &.active-button {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+  
+  .desktop-user-menu {
+    button {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      
+      &.active-button {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #fafafa;
+  min-height: calc(100vh - 128px); // Adjust based on toolbar height
+}
+
+.app-footer {
+  margin-top: auto;
+  background-color: #424242;
+  
+  .footer-toolbar {
+    background-color: #424242;
+    color: #ffffff;
+    font-size: 0.875rem;
+    min-height: 48px;
+    justify-content: center;
+    
+    span {
+      text-align: center;
+    }
+  }
+}
+
+// Active states
+.active-link {
+  background-color: rgba(63, 81, 181, 0.1) !important;
+  color: #3f51b5 !important;
+  
+  mat-icon {
+    color: #3f51b5 !important;
+  }
+}
+
+.active-button {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .sidenav {
+    width: 100vw;
+  }
+  
+  .toolbar-brand {
+    font-size: 1rem;
+    
+    span {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 0;
+  }
+  
+  .footer-toolbar {
+    font-size: 0.75rem;
+    padding: 0 8px;
+    
+    span {
+      text-align: center;
+      line-height: 1.2;
+    }
+  }
+}
+
+// Material Design overrides
+mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-nav-list {
+  padding-top: 0;
+}
+
+mat-list-item {
+  &.active-link {
+    background-color: rgba(63, 81, 181, 0.1);
+    
+    .mat-list-item-content {
+      color: #3f51b5;
+    }
+    
+    mat-icon {
+      color: #3f51b5;
+    }
+  }
+}
+
+// Menu styling
+mat-menu {
+  .mat-menu-content {
+    padding: 8px 0;
+  }
+  
+  button[mat-menu-item] {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    mat-icon {
+      margin-right: 0;
+    }
+  }
+}
