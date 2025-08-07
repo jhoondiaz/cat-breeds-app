@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class CatBreedsService {
-  private readonly baseUrl = `${environment.apiUrl}` || 'https://api.thecatapi.com/v1';
+  private readonly baseUrl = `${environment.apiUrl}` || 'http://localhost:3000/api' || 'https://api.thecatapi.com/v1';
   private readonly apiKey = environment.backendApiKey; // Replace with your actual API key
 
   constructor(private http: HttpClient, private authService: AuthService) {}

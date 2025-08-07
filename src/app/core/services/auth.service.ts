@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = environment.apiUrl + '/auth';
+  private baseUrl = environment.apiUrl || 'http://localhost:3000/api' + '/auth';
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   private tokenSubject = new BehaviorSubject<string | null>(null);
 
